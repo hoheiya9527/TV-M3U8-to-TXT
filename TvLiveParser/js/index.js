@@ -74,6 +74,8 @@ function doParse(url) {
 					var douHao = str.lastIndexOf(",");
 					// console.log("douHao:" + douHao)
 					if (douHao > 0) {
+						item.name = str.slice(douHao + 1);
+						console.log("====" + item.name)
 						str = str.slice(0, douHao);
 					}
 					var ary = str.split(" ");
@@ -87,7 +89,9 @@ function doParse(url) {
 							if (tag_id == key) {
 								item.id = value;
 							} else if (tag_name == key) {
-								item.name = value;
+								if (!item.name) {
+									item.name = value;
+								}
 							} else if (tag_group == key) {
 								item.group = value;
 								var inAr = $.inArray(value, group);
@@ -127,7 +131,7 @@ function doParse(url) {
 				//
 				$.each(res, function(j, entry) {
 					if (val == entry.group) {
-						result += entry.id;
+						result += entry.name;
 						result += ",";
 						result += entry.link;
 						result += "\r\n";
